@@ -1,0 +1,38 @@
+---
+# General config
+grafana_docker_network_name: "web"
+grafana_docker_base_path: "/opt"
+grafana_docker_timezone: "Europe/Berlin"
+
+# User/Group of the stack. Everything is mapped to this, instead of root.
+grafana_docker_user: "homelab"
+grafana_docker_uid: "900"
+grafana_docker_group: "homelab"
+grafana_docker_gid: "900"
+grafana_docker_user_system: true
+
+# which container version to install
+# https://hub.docker.com/r/grafana/grafana/tags
+# can also be latest
+grafana_docker_version: "grafana/grafana:latest"
+
+# additional docker compose environment varaibles
+# https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#override-configuration-with-environment-variables
+grafana_docker_environment_variables:
+  - "GF_INSTALL_PLUGINS: 'grafana-clock-panel, grafana-simple-json-datasource'"
+grafana_docker_volumes:
+  - "/opt/grafana/data:/var/lib/grafana"
+
+# which port to expose. can be empty
+grafana_docker_ports:
+  - "3000:3000/tcp"  # WebUI
+
+grafana_docker_labels:
+  - "traefik.enable=false"
+# - "traefik.enable=true"
+# - "traefik.http.routers.grafana.entryPoints=https"
+# - "traefik.http.routers.grafana.rule=Host(`grafana.example.com`)"
+# - "traefik.http.routers.grafana.tls.certResolver=letsEncrypt"
+# - "traefik.http.routers.grafana.tls=true"
+#  - "traefik.http.routers.grafana.service=grafana"
+#  - "traefik.http.routers.grafana.loadbalancer.server.port=80"

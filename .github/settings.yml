@@ -1,0 +1,8 @@
+---
+#
+# Ansible managed
+#
+repository:
+  description: Installs and configures grafana container based on official grafana docker container
+  homepage: https://mullholland.net
+  topics: cloud, development, webserver, grafana, proxy, ansible, molecule, tox, playbook
