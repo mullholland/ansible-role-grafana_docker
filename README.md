@@ -76,7 +76,7 @@ grafana_docker_environment_variables:
   - "GF_INSTALL_PLUGINS: 'grafana-clock-panel, grafana-simple-json-datasource'"
 grafana_docker_volumes:
   - "/opt/grafana/data:/var/lib/grafana"
-  - "/opt/grafana/provision:/var/lib/provision"
+  - "/opt/grafana/provisioning:/etc/grafana/provisioning"
 
 # which port to expose. can be empty
 grafana_docker_ports:

@@ -24,8 +24,12 @@
     state: directory
   with_items:
     - "data"
-    - "provision/dashboards"
-    - "provision/datasources"
+    - "data/dashboards"
+    - "provisioning/dashboards"
+    - "provisioning/datasources"
+    - "provisioning/plugins"
+    - "provisioning/notifiers"
+    - "provisioning/alerting"
 
 - name: grafana | get docker executable path
   ansible.builtin.command:
@@ -45,7 +49,7 @@
 - name: "grafana | create dashboards provision"
   ansible.builtin.template:
     src: "dashboards.yml.j2"
-    dest: "{{ app_base_path }}/{{ app_name }}/provision/dashboards/dashboards.yml"
+    dest: "{{ app_base_path }}/{{ app_name }}/provisioning/dashboards/dashboards.yml"
     mode: "0640"
     owner: "{{ app_user }}"
     group: "{{ app_group }}"
@@ -54,7 +58,7 @@
 - name: "grafana | create datasources provision"
   ansible.builtin.template:
     src: "datasources.yml.j2"
-    dest: "{{ app_base_path }}/{{ app_name }}/provision/datasources/datasources.yml"
+    dest: "{{ app_base_path }}/{{ app_name }}/provisioning/datasources/datasources.yml"
     mode: "0640"
     owner: "{{ app_user }}"
     group: "{{ app_group }}"
