@@ -76,6 +76,7 @@ grafana_docker_environment_variables:
   - "GF_INSTALL_PLUGINS: 'grafana-clock-panel, grafana-simple-json-datasource'"
 grafana_docker_volumes:
   - "/opt/grafana/data:/var/lib/grafana"
+  - "/opt/grafana/provision:/var/lib/provision"
 
 # which port to expose. can be empty
 grafana_docker_ports:
@@ -90,6 +91,43 @@ grafana_docker_labels:
 # - "traefik.http.routers.grafana.tls=true"
 #  - "traefik.http.routers.grafana.service=grafana"
 #  - "traefik.http.routers.grafana.loadbalancer.server.port=80"
+
+grafana_docker_provision_datasources:
+  - name: VictoriaMetrics
+    type: prometheus
+    access: proxy
+    url: http://victoriametrics:8428
+    isDefault: true
+    jsonData:
+      prometheusType: Prometheus
+      prometheusVersion: 2.24.0
+  - name: Loki
+    type: loki
+    access: proxy
+    url: http://loki:3100
+    jsonData:
+      timeout: 60
+      maxLines: 10000
+  - name: VMAlert
+    type: alertmanager
+    url: http://vmalert:8880
+    access: proxy
+    jsonData:
+      # Valid options for implementation include mimir, cortex and prometheus
+      implementation: prometheus
+      # Whether or not Grafana should send alert instances to this Alertmanager
+      handleGrafanaManagedAlerts: false
+
+# Creates the provison config.
+# You can put any dashboards json files into the provision folder outsie the container
+# and grafnaa will automatically deploy it
+grafana_docker_provision_dashboards:
+  - name: dashboards
+    type: file
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/provision/dashboards
+      foldersFromFilesStructure: true
 ```
 
 ## [Requirements](#requirements)

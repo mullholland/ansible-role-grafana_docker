@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+apiVersion: 1
+
+{% if grafana_docker_provision_dashboards and grafana_docker_provision_dashboards|length %}
+providers:
+{{ grafana_docker_provision_dashboards | to_nice_yaml(indent=2, width=1200) }}
+{% endif %}
