@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+apiVersion: 1
+
+{% if grafana_docker_provision_datasources and grafana_docker_provision_datasources|length %}
+datasources:
+{{ grafana_docker_provision_datasources | to_nice_yaml(indent=2, width=1200) }}
+{% endif %}
